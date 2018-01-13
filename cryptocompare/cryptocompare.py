@@ -93,11 +93,12 @@ def get_histoData(coin,start,end,curr=CURR):
         priceData = get_histoDay(coin, curr=CURR, timestamp=d) # for some reason this returns two dat blocks, one 29 hours off, one 5 hours off
         closer = priceData['Data'][1]
         actTime = datetime.datetime.fromtimestamp(closer['time'])
-        for p in ['low', 'high', 'open', 'close', 'volumeto', 'volumefrom']:
-            resFrame.ix[actTime, p] = closer[p]
-        print(resFrame)
+        columns = {'low': 'low', 'high': 'high', 'open': 'open', 'close': 'close', 'volumefrom': 'volume'} #rename columns to standard convention
+        for c in columns:
+            resFrame.ix[actTime, columns[c]] = closer[c]
+    return resFrame
 
 if __name__ == "__main__":
-    start = datetime.datetime(2018,1,1)
+    start = datetime.datetime(2017,1,1)
     end = datetime.datetime(2018,1,12)
     get_histoData("BTC", start, end)
