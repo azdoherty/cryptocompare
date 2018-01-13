@@ -39,6 +39,6 @@ print(cryptocompare.get_historical_price_hour(coins[1], curr=['EUR','USD','GBP']
 print('======================== AVG =====================')
 print(cryptocompare.get_avg(coins[0], markets='Coinbase'))
 print(cryptocompare.get_avg(coins[0], curr='USD', markets='Coinbase'))
-'''
 print(cryptocompare.get_histoDay(coins[0], curr='USD',timestamp=datetime.datetime(2018,1,10)))
+'''
 

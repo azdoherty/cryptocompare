@@ -2,6 +2,7 @@ import sys
 import requests
 import time
 import datetime
+import pandas as pd
 
 # API
 URL_COIN_LIST = 'https://www.cryptocompare.com/api/data/coinlist/'
@@ -84,3 +85,19 @@ def get_histoDay(coin, curr=CURR, timestamp=time.time(),limit=1):
         timestamp = time.mktime(timestamp.timetuple())
     response = query_cryptocompare(URL_HISTODAY.format(coin, curr, int(timestamp),limit))
     return response
+
+def get_histoData(coin,start,end,curr=CURR):
+    dateIndex = pd.date_range(start, end)
+    resFrame = pd.DataFrame()
+    for d in dateIndex:
+        priceData = get_histoDay(coin, curr=CURR, timestamp=d) # for some reason this returns two dat blocks, one 29 hours off, one 5 hours off
+        closer = priceData['Data'][1]
+        actTime = datetime.datetime.fromtimestamp(closer['time'])
+        for p in ['low', 'high', 'open', 'close', 'volumeto', 'volumefrom']:
+            resFrame.ix[actTime, p] = closer[p]
+        print(resFrame)
+
+if __name__ == "__main__":
+    start = datetime.datetime(2018,1,1)
+    end = datetime.datetime(2018,1,12)
+    get_histoData("BTC", start, end)
