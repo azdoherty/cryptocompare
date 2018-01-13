@@ -11,6 +11,7 @@ URL_PRICE_MULTI_FULL = 'https://min-api.cryptocompare.com/data/pricemultifull?fs
 URL_HIST_PRICE = 'https://min-api.cryptocompare.com/data/pricehistorical?fsym={}&tsyms={}&ts={}'
 URL_HIST_PRICE_HOUR = 'https://min-api.cryptocompare.com/data/histohour?fsym={}&tsym={}'
 URL_AVG = 'https://min-api.cryptocompare.com/data/generateAvg?fsym={}&tsym={}&markets={}'
+URL_HISTODAY = 'https://min-api.cryptocompare.com/data/histoday?fsym={}&tsym={}&toTs={}&e=CCCAGG&limit={}'
 
 # FIELDS
 PRICE = 'PRICE'
@@ -34,8 +35,9 @@ def query_cryptocompare(url,errorCheck=True):
         return None
     # TODO: check for 'Response' and a value different than 'Success'
     if errorCheck and 'Response' in response.keys():
-        print('[ERROR] %s' % response['Message'])
-        return None
+        if response['Response'] != "Success":
+            print('[ERROR] %s' % response['Message'])
+            return None
     return response
 
 def format_parameter(parameter):
@@ -77,3 +79,8 @@ def get_avg(coin, curr=CURR, markets='CCCAGG'):
     if response: 
         return response['RAW']
 
+def get_histoDay(coin, curr=CURR, timestamp=time.time(),limit=1):
+    if isinstance(timestamp, datetime.datetime):
+        timestamp = time.mktime(timestamp.timetuple())
+    response = query_cryptocompare(URL_HISTODAY.format(coin, curr, int(timestamp),limit))
+    return response

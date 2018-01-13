@@ -6,7 +6,7 @@ import time
 
 coins = ['BTC', 'ETH', 'XMR', 'NEO']
 currencies = ['EUR', 'USD', 'GBP']
-
+'''
 print('================== COIN LIST =====================')
 print(cryptocompare.get_coin_list())
 print(cryptocompare.get_coin_list(True))
@@ -39,5 +39,6 @@ print(cryptocompare.get_historical_price_hour(coins[1], curr=['EUR','USD','GBP']
 print('======================== AVG =====================')
 print(cryptocompare.get_avg(coins[0], markets='Coinbase'))
 print(cryptocompare.get_avg(coins[0], curr='USD', markets='Coinbase'))
-
+'''
+print(cryptocompare.get_histoDay(coins[0], curr='USD',timestamp=datetime.datetime(2018,1,10)))
 
