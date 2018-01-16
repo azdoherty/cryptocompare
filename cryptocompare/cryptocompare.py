@@ -99,6 +99,6 @@ def get_histoData(coin,start,end,curr=CURR):
     return resFrame
 
 if __name__ == "__main__":
-    start = datetime.datetime(2017,1,1)
-    end = datetime.datetime(2018,1,12)
-    get_histoData("BTC", start, end)
+    start = datetime.datetime(2017, 1, 1)
+    end = datetime.datetime(2018, 1, 12)
+    get_histoData("XVG", start, end)
